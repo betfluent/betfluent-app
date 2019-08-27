@@ -1,7 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "module": "es2015",
+    "module": "commonjs",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "target": "es6",
@@ -9,12 +9,7 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "build",
-    "baseUrl": ".",
-    "paths": {
-      "*": [
-        "node_modules/*"
-      ]
-    }
+    "baseUrl": "."
   },
   "include": [
     "src/**/*"

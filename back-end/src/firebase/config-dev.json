@@ -1,0 +1,8 @@
+{
+  "apiKey": "AIzaSyALTKmSmehVCCsXWr_aY9MDmHAfVJhiZOs",
+  "authDomain": "betfluent-staging.firebaseapp.com",
+  "databaseURL": "https://betfluent-staging.firebaseio.com",
+  "projectId": "betfluent-staging",
+  "storageBucket": "betfluent-staging.appspot.com",
+  "messagingSenderId": "644050862530"
+}
