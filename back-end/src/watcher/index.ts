@@ -1,32 +1,40 @@
-import { admin, Database } from '../firebase';
-import Fund from '../entity/fund';
-import Bet from '../entity/bet';
+import { Database, QueryType } from 'firebase';
+import Fund from './fund';
+import Bet from './bet';
+import Game from './game';
+
+const leagues = ['mlb', 'nba'];
 
 export default class Watcher {
-  private _db: admin.database.Database;
+  private _activeFunds: Map<string, Fund> = new Map();
 
-  private _openFunds: Map<string, Fund> = new Map();
+  private _bets: Map<string, Bet> = new Map();
 
-  private _pendingFunds: Map<string, Fund> = new Map();
-
-  private _bets: Map<string, Fund> = new Map();
+  private _games: Map<string, Game> = new Map();
 
   constructor() {
-    this._db = admin.database();
-    Database.onAddOrChangeFeed(this._db.ref('funds').orderByChild('status').equalTo('OPEN'), this.watchOpenFunds, Fund);
-    Database.onAddOrChangeFeed(this._db.ref('funds').orderByChild('status').equalTo('PENDING'), this.watchPendingFunds, Fund);
-    Database.onAddOrChangeFeed(this._db.ref('wagers').orderByChild('status').orderByChild('STAGED'), this.watchStagedBets, Bet);
+    Database.onAddFeed(Database.query({
+      type: QueryType.Order, ref: 'funds', key: 'returnTimeMillis', value: -1,
+    }), this.watchActiveFunds, Fund);
+    Database.onAddFeed(Database.query({
+      type: QueryType.Order, ref: 'wagers', key: 'returned', value: -1,
+    }), this.watchActiveBets, Bet);
+    leagues.forEach((league: string): void => {
+      Database.onAddKey(Database.query({
+        type: QueryType.OrderStart, ref: `${league}/games`, key: 'completedTimeMillis', value: null,
+      }), this.watchActiveGames);
+    });
   }
 
-  private watchOpenFunds(fund: Fund) {
-
+  private watchActiveFunds(fund: Fund) {
+    this._activeFunds.set(fund.id, fund);
   }
 
-  private watchPendingFunds(fund: Fund) {
-
+  private watchActiveBets(bet: Bet) {
+    this._bets.set(bet.id, bet);
   }
 
-  private watchStagedBets(bet: Bet) {
-
+  private watchActiveGames(game: Game) {
+    this._games.set(`${game.league}_${game.id}`, game);
   }
 }

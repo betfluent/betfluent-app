@@ -35,6 +35,7 @@
   },
   "rules": {
     "import/no-extraneous-dependencies": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "import/no-unresolved": "off"
   }
 }

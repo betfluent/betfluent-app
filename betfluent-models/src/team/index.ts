@@ -2,7 +2,7 @@ export type TeamType = {
   abbr: string;
   avatarUrl: string;
   color: string;
-  id: string;
+  id?: string;
   market: string;
   name: string;
 };
@@ -14,7 +14,7 @@ export default class Team {
 
   public color: string;
 
-  public id: string;
+  public id?: string;
 
   public market: string;
 
@@ -26,7 +26,7 @@ export default class Team {
     this.abbr = abbr;
     this.avatarUrl = avatarUrl;
     this.color = color;
-    this.id = id;
+    if (this.id) this.id = id;
     this.market = market;
     this.name = name;
   }

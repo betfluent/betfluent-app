@@ -1,7 +1,5 @@
-import Team from '../team';
-
 export type GameType = {
-  id: string;
+  id?: string;
   description: string;
   league: string;
   status: string;
@@ -61,7 +59,7 @@ export type FootballSituation = {
 };
 
 export default class Game {
-  public id: string;
+  public id?: string;
 
   public description: string;
 
@@ -119,10 +117,6 @@ export default class Game {
   // Football-specific fields
   public situation?: FootballSituation;
 
-  public awayTeam: Team;
-
-  public homeTeam: Team;
-
   constructor(
     {
       id,
@@ -166,21 +160,17 @@ export default class Game {
         yfd: 10,
       },
     }: GameType,
-    awayTeam: Team,
-    homeTeam: Team,
   ) {
-    this.id = id;
+    if (this.id) this.id = id;
     this.description = description;
     this.league = league;
     this.status = status;
     this.scheduledTimeUnix = scheduledTimeUnix;
     if (startTimeMillis) this.startTimeMillis = startTimeMillis;
     if (completedTimeMillis) this.completedTimeMillis = completedTimeMillis;
-    if (awayTeam) this.awayTeam = awayTeam;
     this.awayTeamId = awayTeamId;
     this.awayTeamName = awayTeamName;
     this.awayTeamAlias = awayTeamAlias;
-    if (homeTeam) this.homeTeam = homeTeam;
     this.homeTeamId = homeTeamId;
     this.homeTeamName = homeTeamName;
     this.homeTeamAlias = homeTeamAlias;

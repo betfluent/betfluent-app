@@ -1,4 +1,3 @@
-import Manager from '../manager';
 import { FirebaseCollection } from '../firebase-collection';
 
 export type FundType = {
@@ -15,7 +14,7 @@ export type FundType = {
   fadeReturned: number;
   fadeWagers?: FirebaseCollection<number>;
   games?: FirebaseCollection<string>;
-  id: string;
+  id?: string;
   league: string;
   managerId: string;
   maxBalance: number;
@@ -62,7 +61,7 @@ export default class Fund {
 
   public games?: Map<string, string>;
 
-  public id: string;
+  public id?: string;
 
   public league: string;
 
@@ -132,8 +131,7 @@ export default class Fund {
     status,
     type,
     wagers,
-  }: FundType,
-  manager: Manager) {
+  }: FundType) {
     this.amountReturned = amountReturned;
     this.amountWagered = amountWagered;
     this.balance = balance;
@@ -147,9 +145,8 @@ export default class Fund {
     this.fadeReturned = fadeReturned;
     this.fadeWagers = new Map(Object.keys(fadeWagers).map(k => [k, fadeWagers[k]]));
     this.games = new Map(Object.keys(games).map(k => [k, games[k]]));
-    this.id = id;
+    if (this.id) this.id = id;
     this.league = league;
-    this.manager = manager;
     this.managerId = managerId;
     this.maxBalance = maxBalance;
     this.maxInvestment = maxInvestment;

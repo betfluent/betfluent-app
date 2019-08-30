@@ -3,7 +3,7 @@ export type BetType = {
   fundId: string;
   gameId: string;
   gameLeague: string;
-  id: string;
+  id?: string;
   liveTimeMillis?: number;
   managerId: string;
   overUnder?: string;
@@ -31,7 +31,7 @@ export default class Bet {
 
   public gameLeague: string;
 
-  public id: string;
+  public id?: string;
 
   public liveTimeMillis?: number;
 
@@ -86,7 +86,7 @@ export default class Bet {
     fade,
   }: BetType) {
     this.createdTimeMillis = createdTimeMillis;
-    this.id = id;
+    if (this.id) this.id = id;
     this.fundId = fundId;
     this.gameId = gameId;
     this.gameLeague = gameLeague;
